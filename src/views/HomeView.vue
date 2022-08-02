@@ -37,9 +37,34 @@ export default {
     //   }
     // },
 
-    addFavPet(id) {
+    // addFavPet(id) {
+    //   this.pets = this.pets.map((pet) =>
+    //     pet.id === id ? { ...pet, isFavorite: !pet.isFavorite } : pet
+    //   );
+    // },
+
+    async addFavPet(id) {
+      const addFavorite = await this.fetchPet(id);
+      const updateFav = {
+        ...addFavorite,
+        isFavorite: !addFavorite.isFavorite,
+      };
+
+      const res = await fetch(
+        `https://62e90083249bb1284eb837a8.mockapi.io/pets/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(updateFav),
+        }
+      );
+
+      const data = await res.json();
+
       this.pets = this.pets.map((pet) =>
-        pet.id === id ? { ...pet, isFavorite: !pet.isFavorite } : pet
+        pet.id === id ? { ...pet, isFavorite: data.isFavorite } : pet
       );
     },
 
