@@ -1,6 +1,6 @@
 <template>
-    <div class="pets">
-        <div v-for="pet in pets" :key="pet.id">
+    <div class="p-grid">
+        <div class="p-col-12 p-md-6 p-lg-3" v-for="pet in pets" :key="pet.id">
             <!-- <h3>{{ pet.name }}</h3> -->
             <Pet :pet="pet" />
         </div>
@@ -20,3 +20,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.p-grid {
+    display: flex;
+    gap: 2rem;
+    margin: 1rem 2rem;
+}
+</style>

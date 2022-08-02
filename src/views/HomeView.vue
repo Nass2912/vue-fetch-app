@@ -1,13 +1,15 @@
 <template>
+  <Form />
   <Pets :pets="pets" />
 </template>
 
 <script>
 import Pets from "../components/Pets.vue";
+import Form from "../components/Form.vue";
 
 export default {
   name: "HomeView",
-  components: { Pets },
+  components: { Pets, Form },
   data() {
     return {
       pets: [

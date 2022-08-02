@@ -15,8 +15,10 @@
                 <p></p>
             </template>
             <template #footer>
-                <Button icon="pi pi-heart" class="p-button-rounded p-button-danger" style="margin-right: 4rem;" />
                 <Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" />
+                <Button icon="pi pi-heart" class="p-button-rounded p-button-danger" style="margin-left: 4rem;" />
+
+                <Button icon="pi pi-heart" class="p-button-rounded p-button-danger p-button-outlined" />
             </template>
         </Card>
     </div>
