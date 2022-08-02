@@ -1,6 +1,6 @@
 <template>
-  <Form />
-  <Pets :pets="pets" />
+  <Form @addNewPet="addNewerPet" />
+  <Pets @EmitRemovePet="removePet" @favPet="addFavPet" :pets="pets" />
 </template>
 
 <script>
@@ -29,6 +29,24 @@ export default {
         },
       ],
     };
+  },
+
+  methods: {
+    removePet(id) {
+      if (confirm("You sure?")) {
+        this.pets = this.pets.filter((pet) => pet.id !== id);
+      }
+    },
+
+    addFavPet(id) {
+      this.pets = this.pets.map((pet) =>
+        pet.id === id ? { ...pet, isFavorite: !pet.isFavorite } : pet
+      );
+    },
+
+    addNewerPet(arrayProp) {
+      this.pets.push(arrayProp);
+    },
   },
 };
 </script>
