@@ -24,7 +24,6 @@ export default {
       name: "",
       age: "",
       url: "",
-      isFavorite: false,
     };
   },
 
@@ -33,13 +32,17 @@ export default {
       e.preventDefault();
 
       const newPet = {
-        id: Math.random(),
         name: this.name,
         age: this.age,
         url: this.url,
+        isFavorite: false,
       };
 
       this.$emit("addNewPet", newPet);
+
+      this.name = "";
+      this.age = "";
+      this.url = "";
     },
   },
 };

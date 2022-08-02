@@ -10,33 +10,32 @@ import Form from "../components/Form.vue";
 export default {
   name: "HomeView",
   components: { Pets, Form },
-  data() {
-    return {
-      pets: [
-        {
-          id: 1,
-          name: "Ruby",
-          age: 2,
-          img: "https://dog.ceo/api/breeds/image/random",
-          isFavorite: true,
-        },
-        {
-          id: 2,
-          name: "Geo",
-          age: 2,
-          img: "https://dog.ceo/api/breeds/image/random",
-          isFavorite: false,
-        },
-      ],
-    };
+
+  async created() {
+    this.pets = await this.fetchPets();
   },
 
   methods: {
-    removePet(id) {
-      if (confirm("You sure?")) {
-        this.pets = this.pets.filter((pet) => pet.id !== id);
+    async removePet(id) {
+      if (confirm("Are you sure ?")) {
+        const res = await fetch(
+          `https://62e90083249bb1284eb837a8.mockapi.io/pets/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        res.status == 200
+          ? (this.pets = this.pets.filter((pet) => pet.id !== id))
+          : alert("An error occured");
       }
     },
+
+    // removePet(id) {
+    //   if (confirm("You sure?")) {
+    //     this.pets = this.pets.filter((pet) => pet.id !== id);
+    //   }
+    // },
 
     addFavPet(id) {
       this.pets = this.pets.map((pet) =>
@@ -44,9 +43,47 @@ export default {
       );
     },
 
-    addNewerPet(arrayProp) {
-      this.pets.push(arrayProp);
+    // addNewerPet(arrayProp) {
+    //   this.pets.push(arrayProp);
+    // },
+
+    async fetchPets() {
+      const res = await fetch(
+        "https://62e90083249bb1284eb837a8.mockapi.io/pets"
+      );
+      const data = await res.json();
+      return data;
     },
+
+    async fetchPet(id) {
+      const res = await fetch(
+        `https://62e90083249bb1284eb837a8.mockapi.io/pets/${id}`
+      );
+      const data = await res.json();
+      return data;
+    },
+
+    async addNewerPet(pet) {
+      const res = await fetch(
+        "https://62e90083249bb1284eb837a8.mockapi.io/pets",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(pet),
+        }
+      );
+
+      const data = await res.json();
+      this.pets = [...this.pets, data];
+    },
+  },
+
+  data() {
+    return {
+      pets: [],
+    };
   },
 };
 </script>
